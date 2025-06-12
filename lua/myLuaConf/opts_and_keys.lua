@@ -29,14 +29,14 @@ vim.wo.number = true
 vim.o.mouse = 'a'
 
 -- Indent
--- vim.o.smarttab = true
-vim.opt.cpoptions:append('I')
+vim.o.smarttab = true
+-- vim.opt.cpoptions:append('I')
 vim.o.expandtab = true
--- vim.o.smartindent = true
--- vim.o.autoindent = true
--- vim.o.tabstop = 4
--- vim.o.softtabstop = 4
--- vim.o.shiftwidth = 4
+vim.o.smartindent = true
+vim.o.autoindent = true
+vim.o.tabstop = 4
+vim.o.softtabstop = 4
+vim.o.shiftwidth = 4
 
 -- stops line wrapping from being confusing
 vim.o.breakindent = true
@@ -61,6 +61,25 @@ vim.o.completeopt = 'menu,preview,noselect'
 
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
+
+-- Folding
+vim.opt.foldenable = true
+vim.opt.foldmethod = 'expr'
+vim.opt.foldcolumn = '1'
+vim.opt.foldlevel = 99 -- Open all folds initially
+vim.opt.fillchars = { fold = " ", foldopen = "", foldclose = "", foldsep = " " }
+-- Default to treesitter folding
+vim.o.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+-- Prefer LSP folding if client supports it
+vim.api.nvim_create_autocmd('LspAttach', {
+    callback = function(args)
+         local client = vim.lsp.get_client_by_id(args.data.client_id)
+         if client:supports_method('textDocument/foldingRange') then
+             local win = vim.api.nvim_get_current_win()
+             vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
+        end
+    end,
+ })
 
 -- [[ Disable auto comment on enter ]]
 -- See :help formatoptions

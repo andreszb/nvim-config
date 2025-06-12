@@ -1,22 +1,19 @@
-require('lze').load {
+require('lze').load({
   {
-    "conform.nvim",
+    'conform.nvim',
     for_cat = 'format',
-    -- cmd = { "" },
-    -- event = "",
-    -- ft = "",
+    event = 'DeferredUIEnter',
     keys = {
-      { "<leader>FF", desc = "[F]ormat [F]ile" },
+      { '<leader>FF', desc = '[F]ormat [F]ile' },
     },
-    -- colorscheme = "",
-    after = function (plugin)
-      local conform = require("conform")
+    after = function(plugin)
+      local conform = require('conform')
 
       conform.setup({
         formatters_by_ft = {
+          lua = { 'stylua' },
           -- NOTE: download some formatters in lspsAndRuntimeDeps
           -- and configure them here
-          -- lua = { "stylua" },
           -- go = { "gofmt", "golint" },
           -- templ = { "templ" },
           -- Conform will run multiple formatters sequentially
@@ -24,15 +21,38 @@ require('lze').load {
           -- Use a sub-list to run only the first available formatter
           -- javascript = { { "prettierd", "prettier" } },
         },
+        formatters = {
+          stylua = {
+            prepend_args = {
+              '--indent-type',
+              'Spaces',
+              '--indent-width',
+              '2',
+              '--line-endings',
+              'Unix',
+              '--quote-style',
+              'ForceSingle',
+              '--call-parentheses',
+              'Always',
+              '--collapse-simple-statement',
+              'FunctionOnly',
+            },
+          },
+        },
       })
 
-      vim.keymap.set({ "n", "v" }, "<leader>FF", function()
-        conform.format({
-          lsp_fallback = true,
-          async = false,
-          timeout_ms = 1000,
-        })
-      end, { desc = "[F]ormat [F]ile" })
+      vim.keymap.set(
+        { 'n', 'v' },
+        '<leader>FF',
+        function()
+          conform.format({
+            lsp_fallback = true,
+            async = false,
+            timeout_ms = 1000,
+          })
+        end,
+        { desc = '[F]ormat [F]ile' }
+      )
     end,
   },
-}
+})

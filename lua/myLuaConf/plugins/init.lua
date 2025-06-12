@@ -1,6 +1,6 @@
 local colorschemeName = nixCats('colorscheme')
 if not require('nixCatsUtils').isNixCats then
-  colorschemeName = 'onedark'
+  colorschemeName = 'tokyonight-night'
 end
 -- Could I lazy load on colorscheme with lze?
 -- sure. But I was going to call vim.cmd.colorscheme() during startup anyway
@@ -67,6 +67,40 @@ require('lze').load {
   { import = "myLuaConf.plugins.telescope", },
   { import = "myLuaConf.plugins.treesitter", },
   { import = "myLuaConf.plugins.completion", },
+  {
+    "nvim-tree.lua",
+    for_cat = 'general.file_navigation',
+    event = "DeferredUIEnter",
+    keys = {
+      {"<C-n>", "<cmd>NvimTreeToggle<CR>", mode = {"n"}, noremap = true, desc = "Toggle nvim-tree"},
+    },
+    after = function(plugin)
+      require('nvim-tree').setup({
+        sort = {
+          sorter = "case_sensitive",
+        },
+        view = {
+          width = 30,
+        },
+        renderer = {
+          group_empty = true,
+        },
+        filters = {
+          dotfiles = true,
+        },
+      })
+    end,
+  },
+  {
+    'mini.nvim',
+    for_cat = 'general.always',
+    event = "DeferredUIEnter",
+    after = function (plugin)
+      require('mini.pairs').setup()
+      require('mini.icons').setup()
+      require('mini.ai').setup()
+    end,
+  },
   {
     "markdown-preview.nvim",
     -- NOTE: for_cat is a custom handler that just sets enabled value for us,

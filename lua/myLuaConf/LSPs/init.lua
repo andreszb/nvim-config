@@ -54,7 +54,7 @@ require('lze').load {
   {
     -- lazydev makes your lsp way better in your config without needing extra lsp configuration.
     "lazydev.nvim",
-    for_cat = "neonixdev",
+    for_cat = "lua",
     cmd = { "LazyDev" },
     ft = "lua",
     after = function(_)
@@ -68,7 +68,7 @@ require('lze').load {
   {
     -- name of the lsp
     "lua_ls",
-    enabled = nixCats('lua') or nixCats('neonixdev') or false,
+    enabled = nixCats('lua') or false,
     -- provide a table containing filetypes,
     -- and then whatever your functions defined in the function type specs expect.
     -- in our case, it just expects the normal lspconfig setup options,
@@ -94,11 +94,48 @@ require('lze').load {
     -- also these are regular specs and you can use before and after and all the other normal fields
   },
   {
-    "gopls",
-    for_cat = "go",
-    -- if you don't provide the filetypes it asks lspconfig for them
+    "clangd",
+    enabled = nixCats('c') or false,
     lsp = {
-      filetypes = { "go", "gomod", "gowork", "gotmpl" },
+      filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
+      settings = {
+        clangd = {
+          arguments = {
+            "--background-index",
+            "--suggest-missing-includes",
+            "--clang-tidy",
+            "--header-insertion=iwyu",
+          },
+        },
+      },
+    },
+  },
+  {
+    "texlab",
+    enabled = nixCats('latex') or false,
+    lsp = {
+      filetypes = { "tex", "plaintex", "bib" },
+      settings = {
+        texlab = {
+          build = {
+            executable = "latexmk",
+            args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "%f" },
+            onSave = false,
+          },
+          auxDirectory = ".",
+          bibtexFormatter = "texlab",
+          diagnosticsDelay = 300,
+          formatterLineLength = 80,
+          forwardSearch = {
+            executable = nil,
+            args = {},
+          },
+          latexFormatter = "latexindent",
+          latexindent = {
+            modifyLineBreaks = false,
+          },
+        },
+      },
     },
   },
   {
@@ -119,7 +156,7 @@ require('lze').load {
   },
   {
     "nixd",
-    enabled = catUtils.isNixCats and (nixCats('nix') or nixCats('neonixdev')) or false,
+    enabled = catUtils.isNixCats and nixCats('nix') or false,
     lsp = {
       filetypes = { "nix" },
       settings = {

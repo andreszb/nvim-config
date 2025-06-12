@@ -19,7 +19,7 @@
 # If there is still not adequate info, ask in discussions
 # on the nixCats repo (or open a PR to add the info to the help!)
 {
-  description = "A Lua-natic's neovim flake, with extra cats! nixCats!";
+  description = "Neovim configuration of Andres Zambrano";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
@@ -110,28 +110,29 @@
           ripgrep
           fd
         ];
-        # these names are arbitrary.
-        lint = with pkgs; [
-        ];
-        # but you can choose which ones you want
-        # per nvim package you export
         debug = with pkgs; {
-          go = [ delve ];
+          c = [ gdb ];
         };
-        go = with pkgs; [
-          gopls
-          gotools
-          go-tools
-          gccgo
+        c = with pkgs; [
+          clang-tools
+          lldb
+          gcc
+          cmake
+          gnumake
         ];
-        # and easily check if they are included in lua
-        format = with pkgs; [
+        latex = with pkgs; [
+          texlab
+          texliveSmall
         ];
-        neonixdev = {
-          # also you can do this.
-          inherit (pkgs) nix-doc lua-language-server nixd;
-          # and each will be its own sub category
-        };
+        lua = with pkgs; [
+          lua-language-server # A language server for Nix
+          stylua # An opinionated code formatter for Lua
+        ];
+        nix = with pkgs; [
+          nixd # A language server for Nix
+          alejandra # A formatter for Nix code.
+          nix-doc
+        ];
       };
 
       # This is for plugins that will load at startup without using packadd:
@@ -143,20 +144,18 @@
           # you can make subcategories!!!
           # (always isnt a special name, just the one I chose for this subcategory)
           always = [
-            lze
-            lzextras
-            vim-repeat
-            plenary-nvim
-            nvim-notify
+            lze # Lazy loading manager for Neovim
+            lzextras # Extra utilities for lazy loading
+            vim-repeat # Enables repeating plugin maps with ".".
+            plenary-nvim # Lua functions used by other plugins.
+            nvim-notify # Enhanced notification system for Neovim
+            tokyonight-nvim # A dark theme for Neovim
           ];
           extra = [
-            oil-nvim
-            nvim-web-devicons
+            oil-nvim # A file explorer for Neovim
+            nvim-web-devicons #
           ];
         };
-        # You can retreive information from the
-        # packageDefinitions of the package this was packaged with.
-        # :help nixCats.flake.outputs.categoryDefinitions.scheme
         themer = with pkgs.vimPlugins;
           (builtins.getAttr (categories.colorscheme or "onedark") {
               # Theme switcher without creating a new category
@@ -167,7 +166,6 @@
               "tokyonight-day" = tokyonight-nvim;
             }
           );
-          # This is obviously a fairly basic usecase for this, but still nice.
       };
 
       # not loaded automatically at startup.
@@ -186,27 +184,27 @@
             nvim-dap-ui
             nvim-dap-virtual-text
           ];
-          go = [ nvim-dap-go ];
+          c = [ nvim-dap-lldb ];
         };
         lint = with pkgs.vimPlugins; [
-          nvim-lint
+          nvim-lint # Asynchronous linting engine for Neovim
         ];
         format = with pkgs.vimPlugins; [
-          conform-nvim
+          conform-nvim # A formatter for Neovim
         ];
         markdown = with pkgs.vimPlugins; [
-          markdown-preview-nvim
+          markdown-preview-nvim # Preview markdown files in a browser
         ];
-        neonixdev = with pkgs.vimPlugins; [
-          lazydev-nvim
+        lua = with pkgs.vimPlugins; [
+          lazydev-nvim # Development tools for lazy loading.
         ];
         general = {
           blink = with pkgs.vimPlugins; [
-            luasnip
-            cmp-cmdline
-            blink-cmp
-            blink-compat
-            colorful-menu-nvim
+            luasnip # Snipper engine for Neovim
+            cmp-cmdline # Command line completion for Neovim
+            blink-cmp # Completion plugin for Neovim
+            blink-compat # Compatibility layer for blink-cmp
+            colorful-menu-nvim # A colorful menu for Neovim
           ];
           treesitter = with pkgs.vimPlugins; [
             nvim-treesitter-textobjects
@@ -219,28 +217,31 @@
             #   ]
             # ))
           ];
+          file_navigation = with pkgs.vimPlugins; [
+            nvim-tree-lua # File explorer for Neovim
+          ];
           telescope = with pkgs.vimPlugins; [
             telescope-fzf-native-nvim
             telescope-ui-select-nvim
             telescope-nvim
           ];
           always = with pkgs.vimPlugins; [
-            nvim-lspconfig
-            lualine-nvim
+            nvim-lspconfig # Quickstart configurations for LSP.
+            lualine-nvim # LSP progress in lualine
             gitsigns-nvim
-            vim-sleuth
+            vim-sleuth # Automatically adjusts indentation settings
             vim-fugitive
             vim-rhubarb
-            nvim-surround
+            nvim-surround # Surround text objects easily
+            mini-nvim # Library of mini plugins
           ];
           extra = with pkgs.vimPlugins; [
-            fidget-nvim
-            # lualine-lsp-progress
-            which-key-nvim
-            comment-nvim
-            undotree
-            indent-blankline-nvim
-            vim-startuptime
+            fidget-nvim # lualine-lsp-progress
+            which-key-nvim # Displays avaiable keybindings.
+            comment-nvim # Smart and powerful commenting plugin 
+            undotree # Visualize undo history
+            indent-blankline-nvim # Adds indentation guides
+            vim-startuptime # Measure startup time for Vim
             # If it was included in your flake inputs as plugins-hlargs,
             # this would be how to add that plugin in your config.
             # pkgs.neovimPlugins.hlargs
@@ -311,8 +312,8 @@
         debug = [
           [ "debug" "default" ]
         ];
-        go = [
-          [ "debug" "go" ] # yes it has to be a list of lists
+        c = [
+          [ "debug" "c" ] # yes it has to be a list of lists
         ];
       };
     };
@@ -344,12 +345,12 @@
           # or, whatever you named the package definition in the packageDefinitions set.
           # WARNING: MAKE SURE THESE DONT CONFLICT WITH OTHER INSTALLED PACKAGES ON YOUR PATH
           # That would result in a failed build, as nixos and home manager modules validate for collisions on your path
-          aliases = [ "vim" "vimcat" ];
+          aliases = [ "vim" "nvim" ];
 
           # explained below in the `regularCats` package's definition
           # OR see :help nixCats.flake.outputs.settings for all of the settings available
           wrapRc = true;
-          configDirName = "nixCats-nvim";
+          configDirName = "az-nvim";
           # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
           hosts.python3.enable = true;
           hosts.node.enable = true;
@@ -360,14 +361,17 @@
           general = true;
           lint = true;
           format = true;
-          neonixdev = true;
+          lua = true;
+          nix = true;
+          file_navigation = true;
           test = {
             subtest1 = true;
           };
 
-          # enabling this category will enable the go category,
-          # and ALSO debug.go and debug.default due to our extraCats in categoryDefinitions.
-          # go = true; # <- disabled but you could enable it with override or module on install
+          # enabling this category will enable the c category,
+          # and ALSO debug.c and debug.default due to our extraCats in categoryDefinitions.
+          c = true;
+          latex = true;
 
           # this does not have an associated category of plugins, 
           # but lua can still check for it
@@ -375,7 +379,7 @@
           # you could also pass something else:
           # see :help nixCats
           themer = true;
-          colorscheme = "onedark";
+          colorscheme = "tokyonight";
         };
         extra = {
           # to keep the categories table from being filled with non category things that you want to pass
@@ -412,11 +416,14 @@
         categories = {
           markdown = true;
           general = true;
-          neonixdev = true;
           lint = true;
           format = true;
           test = true;
-          # go = true; # <- disabled but you could enable it with override or module on install
+          c = true;
+          latex = true;
+          lua = true;
+          nix = true;
+          file_navigation = true;
           lspDebugMode = false;
           themer = true;
           colorscheme = "catppuccin";
