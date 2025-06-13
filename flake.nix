@@ -208,14 +208,17 @@
           ];
           treesitter = with pkgs.vimPlugins; [
             nvim-treesitter-textobjects
-            nvim-treesitter.withAllGrammars
             # This is for if you only want some of the grammars
-            # (nvim-treesitter.withPlugins (
-            #   plugins: with plugins; [
-            #     nix
-            #     lua
-            #   ]
-            # ))
+            (nvim-treesitter.withPlugins (
+              plugins: with plugins; [
+                nix
+                lua
+                c
+                markdown
+                vim
+                vimdoc
+              ]
+            ))
           ];
           file_navigation = with pkgs.vimPlugins; [
             nvim-tree-lua # File explorer for Neovim
