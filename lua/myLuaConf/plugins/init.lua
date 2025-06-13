@@ -67,6 +67,14 @@ require('lze').load {
   { import = "myLuaConf.plugins.telescope", },
   { import = "myLuaConf.plugins.treesitter", },
   { import = "myLuaConf.plugins.completion", },
+  { 
+    "claude-code.nvim",
+    for_cat = 'general.extra',
+    event = "DeferredUIEnter",
+    after = function(plugin)
+      require('claude-code').setup()
+    end,
+  },
   {
     "nvim-tree.lua",
     for_cat = 'general.file_navigation',
