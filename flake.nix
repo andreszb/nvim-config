@@ -120,7 +120,6 @@
         ];
         latex = with pkgs; [
           texlab
-          texlive.combined.scheme-full
         ];
         lua = with pkgs; [
           lua-language-server # A language server for Nix
