@@ -12,6 +12,7 @@ require('lze').load({
       conform.setup({
         formatters_by_ft = {
           lua = { 'stylua' },
+          nix = { 'alejandra' },
           -- NOTE: download some formatters in lspsAndRuntimeDeps
           -- and configure them here
           -- go = { "gofmt", "golint" },
