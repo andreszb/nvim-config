@@ -107,8 +107,6 @@
         # some categories of stuff.
         general = with pkgs; [
           universal-ctags
-          ripgrep
-          fd
         ];
         debug = with pkgs; {
           c = [ gdb ];
@@ -122,7 +120,7 @@
         ];
         latex = with pkgs; [
           texlab
-          texliveSmall
+          texlive.combined.scheme-full
         ];
         lua = with pkgs; [
           lua-language-server # A language server for Nix
