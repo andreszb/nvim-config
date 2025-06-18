@@ -66,3 +66,62 @@ When modifying this config:
 5. **Lazy loading**: Use `lze` specs with `for_cat` handler for category-based loading
 
 The config maintains compatibility with non-nix environments through the `nixCatsUtils` setup and `non_nix_download.lua` fallback system.
+
+## Adding New Plugins - Step by Step
+
+To add a new plugin (example: toggleterm-nvim):
+
+### Step 1: Add plugin to flake.nix
+Add the plugin to the appropriate category in `flake.nix`:
+
+```nix
+optionalPlugins = {
+  general = {
+    extra = with pkgs.vimPlugins; [
+      toggleterm-nvim # Terminal management plugin
+      # ... other plugins
+    ];
+  };
+};
+```
+
+### Step 2: Create plugin configuration file
+Create a new file in `lua/myLuaConf/plugins/` (e.g., `toggleterm.lua`):
+
+```lua
+-- Plugin configuration following nixCats pattern
+return {
+  {
+    'toggleterm.nvim',
+    for_cat = 'general.extra',  -- Category check using for_cat
+    event = 'VeryLazy',         -- Lazy loading trigger
+    after = function()          -- Use 'after' not 'config' for nixCats
+      require('toggleterm').setup({
+        -- Plugin configuration here
+      })
+    end,
+  },
+}
+```
+
+### Step 3: Add to plugin loader
+Add the import to `lua/myLuaConf/plugins/init.lua`:
+
+```lua
+require('lze').load {
+  -- ... existing imports
+  { import = "myLuaConf.plugins.toggleterm", },
+}
+```
+
+### Step 4: Build and test
+```bash
+nix build  # Test the configuration builds
+nix run    # Run to test the plugin loads
+```
+
+### Key Patterns:
+- **for_cat**: Use instead of `if not nixCats('category')` checks
+- **after**: Use instead of `config` for setup functions
+- **Category matching**: Plugin name in flake.nix should match the string in `for_cat`
+- **Import**: Always add the import to `plugins/init.lua` to load the configuration

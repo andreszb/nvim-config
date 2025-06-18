@@ -71,4 +71,5 @@ require('lze').load {
   { import = "myLuaConf.plugins.lualine", },
   { import = "myLuaConf.plugins.gitsigns", },
   { import = "myLuaConf.plugins.which-key", },
+  { import = "myLuaConf.plugins.toggleterm", },
 }
