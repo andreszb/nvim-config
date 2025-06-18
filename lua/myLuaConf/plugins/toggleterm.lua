@@ -3,7 +3,7 @@ return {
   {
     'toggleterm.nvim',
     for_cat = 'general.extra',
-    event = 'VeryLazy',
+    event = 'DeferredUIEnter',
     after = function()
       require('toggleterm').setup({
         size = 20,

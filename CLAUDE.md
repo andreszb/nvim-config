@@ -93,9 +93,9 @@ Create a new file in `lua/myLuaConf/plugins/` (e.g., `toggleterm.lua`):
 return {
   {
     'toggleterm.nvim',
-    for_cat = 'general.extra',  -- Category check using for_cat
-    event = 'VeryLazy',         -- Lazy loading trigger
-    after = function()          -- Use 'after' not 'config' for nixCats
+    for_cat = 'general.extra',     -- Category check using for_cat
+    event = 'DeferredUIEnter',     -- Lazy loading trigger (not VeryLazy!)
+    after = function()             -- Use 'after' not 'config' for nixCats
       require('toggleterm').setup({
         -- Plugin configuration here
       })
