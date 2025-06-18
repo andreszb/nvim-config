@@ -118,6 +118,7 @@
         # some categories of stuff.
         general = with pkgs; [
           universal-ctags
+          git
         ];
         debug = with pkgs; {
           c = [gdb];
