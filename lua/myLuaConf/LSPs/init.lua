@@ -200,4 +200,43 @@ require('lze').load {
       },
     },
   },
+  {
+    "pyright",
+    enabled = nixCats('python') or false,
+    lsp = {
+      filetypes = { "python" },
+      on_attach = require('myLuaConf.LSPs.python_on_attach'),
+      settings = {
+        pyright = {
+          -- Use strict type checking
+          typeCheckingMode = "strict",
+          -- Automatically search for python path
+          autoSearchPaths = true,
+          useLibraryCodeForTypes = true,
+          -- Enable auto-import completions
+          autoImportCompletions = true,
+        },
+        python = {
+          analysis = {
+            -- Automatically add common paths
+            autoSearchPaths = true,
+            -- Use stub files when available
+            useLibraryCodeForTypes = true,
+            -- Enable diagnostics for all files in workspace
+            diagnosticMode = "workspace",
+            -- Type checking mode
+            typeCheckingMode = "strict",
+            -- Enable auto-import completions
+            autoImportCompletions = true,
+            -- Disable some overly strict warnings
+            diagnosticSeverityOverrides = {
+              reportUnusedImport = "information",
+              reportUnusedVariable = "information",
+              reportGeneralTypeIssues = "warning",
+            },
+          },
+        },
+      },
+    },
+  },
 }

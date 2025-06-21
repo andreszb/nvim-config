@@ -142,6 +142,12 @@
           alejandra # A formatter for Nix code.
           nix-doc
         ];
+        python = with pkgs; [
+          pyright # Python language server
+          black # Python code formatter
+          ruff # Fast Python linter
+          isort # Python import sorter
+        ];
       };
 
       # This is for plugins that will load at startup without using packadd:
@@ -194,6 +200,9 @@
             nvim-dap-virtual-text
           ];
           c = [nvim-dap-lldb];
+          python = with pkgs; [
+            python3Packages.debugpy # Python debugger
+          ];
         };
         lint = with pkgs.vimPlugins; [
           nvim-lint # Asynchronous linting engine for Neovim
@@ -227,6 +236,7 @@
                   markdown
                   vim
                   vimdoc
+                  python
                 ]
             ))
           ];
@@ -331,6 +341,9 @@
         c = [
           ["debug" "c"] # yes it has to be a list of lists
         ];
+        python = [
+          ["debug" "default"] # Enable debug plugins for Python
+        ];
       };
     };
 
@@ -380,6 +393,7 @@
           format = true;
           lua = true;
           nix = true;
+          python = true;
           file_navigation = true;
           test = {
             subtest1 = true;
@@ -440,6 +454,7 @@
           latex = true;
           lua = true;
           nix = true;
+          python = true;
           file_navigation = true;
           lspDebugMode = false;
           themer = true;
