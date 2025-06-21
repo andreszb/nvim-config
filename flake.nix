@@ -148,6 +148,9 @@
           ruff # Fast Python linter
           isort # Python import sorter
         ];
+        json = with pkgs; [
+          vscode-langservers-extracted # JSON language server (jsonls)
+        ];
       };
 
       # This is for plugins that will load at startup without using packadd:
@@ -168,6 +171,7 @@
           ];
           extra = [
             oil-nvim # A file explorer for Neovim
+            oil-git-status-nvim # Git status integration for oil.nvim
             nvim-web-devicons #
           ];
         };
@@ -237,6 +241,7 @@
                   vim
                   vimdoc
                   python
+                  json
                 ]
             ))
           ];
@@ -394,6 +399,7 @@
           lua = true;
           nix = true;
           python = true;
+          json = true;
           file_navigation = true;
           test = {
             subtest1 = true;
@@ -455,6 +461,7 @@
           lua = true;
           nix = true;
           python = true;
+          json = true;
           file_navigation = true;
           lspDebugMode = false;
           themer = true;

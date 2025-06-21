@@ -239,4 +239,49 @@ require('lze').load {
       },
     },
   },
+  {
+    "jsonls",
+    enabled = nixCats('json') or false,
+    lsp = {
+      filetypes = { "json", "jsonc" },
+      settings = {
+        json = {
+          -- Enable schema validation
+          validate = { enable = true },
+          -- Schema store integration
+          schemas = {
+            {
+              description = "JSON schema for package.json files",
+              fileMatch = { "package.json" },
+              url = "https://json.schemastore.org/package.json",
+            },
+            {
+              description = "JSON schema for tsconfig.json files",
+              fileMatch = { "tsconfig.json", "tsconfig.*.json" },
+              url = "https://json.schemastore.org/tsconfig.json",
+            },
+            {
+              description = "JSON schema for .eslintrc files",
+              fileMatch = { ".eslintrc", ".eslintrc.json" },
+              url = "https://json.schemastore.org/eslintrc.json",
+            },
+            {
+              description = "JSON schema for .prettierrc files",
+              fileMatch = { ".prettierrc", ".prettierrc.json" },
+              url = "https://json.schemastore.org/prettierrc.json",
+            },
+            {
+              description = "JSON schema for composer.json files",
+              fileMatch = { "composer.json" },
+              url = "https://json.schemastore.org/composer.json",
+            },
+          },
+          -- Format settings
+          format = {
+            enable = true,
+          },
+        },
+      },
+    },
+  },
 }

@@ -21,8 +21,12 @@ end
 -- Setup oil plugin immediately 
 if nixCats('general.extra') then
   vim.g.loaded_netrwPlugin = 1
+
   require("oil").setup({
     default_file_explorer = true,
+    win_options = {
+      signcolumn = "yes:2",
+    },
     view_options = {
       show_hidden = true
     },
@@ -50,6 +54,10 @@ if nixCats('general.extra') then
       ["g\\"] = "actions.toggle_trash",
     },
   })
+
+  -- Setup oil-git-status after oil is configured
+  require("oil-git-status").setup({})
+
   vim.keymap.set("n", "-", "<cmd>Oil<CR>", { noremap = true, desc = 'Open Parent Directory' })
   vim.keymap.set("n", "<leader>-", "<cmd>Oil .<CR>", { noremap = true, desc = 'Open nvim root directory' })
 end
