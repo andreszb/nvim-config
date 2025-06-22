@@ -109,10 +109,10 @@ vim.g.netrw_banner=0
 -- See `:help vim.keymap.set()`
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = 'Moves Line Down' })
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = 'Moves Line Up' })
-vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = 'Scroll Down' })
-vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = 'Scroll Up' })
-vim.keymap.set("n", "n", "nzzzv", { desc = 'Next Search Result' })
-vim.keymap.set("n", "N", "Nzzzv", { desc = 'Previous Search Result' })
+-- vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = 'Scroll Down' })
+-- vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = 'Scroll Up' })
+-- vim.keymap.set("n", "n", "nzzzv", { desc = 'Next Search Result' })
+-- vim.keymap.set("n", "N", "Nzzzv", { desc = 'Previous Search Result' })
 
 vim.keymap.set("n", "<leader><leader>[", "<cmd>bprev<CR>", { desc = 'Previous buffer' })
 vim.keymap.set("n", "<leader><leader>]", "<cmd>bnext<CR>", { desc = 'Next buffer' })
