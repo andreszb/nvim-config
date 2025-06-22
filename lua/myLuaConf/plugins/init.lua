@@ -63,6 +63,7 @@ if nixCats('general.extra') then
 end
 
 require('lze').load {
+  { import = "myLuaConf.plugins.alpha", },
   { import = "myLuaConf.plugins.telescope", },
   { import = "myLuaConf.plugins.treesitter", },
   { import = "myLuaConf.plugins.completion", },
