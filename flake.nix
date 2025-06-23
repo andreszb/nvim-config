@@ -166,8 +166,8 @@
             lzextras # Extra utilities for lazy loading
             vim-repeat # Enables repeating plugin maps with ".".
             plenary-nvim # Lua functions used by other plugins.
-            nvim-notify # Enhanced notification system for Neovim
             tokyonight-nvim # A dark theme for Neovim
+            nui-nvim # UI component library for neo-tree
           ];
           extra = [
             oil-nvim # A file explorer for Neovim
@@ -230,6 +230,7 @@
           ];
           treesitter = with pkgs.vimPlugins; [
             nvim-treesitter-textobjects
+            nvim-treesitter-context
             # This is for if you only want some of the grammars
             (nvim-treesitter.withPlugins (
               plugins:
@@ -246,7 +247,7 @@
             ))
           ];
           file_navigation = with pkgs.vimPlugins; [
-            nvim-tree-lua # File explorer for Neovim
+            neo-tree-nvim # File explorer for Neovim
           ];
           telescope = with pkgs.vimPlugins; [
             telescope-fzf-native-nvim
@@ -272,6 +273,12 @@
             vim-startuptime # Measure startup time for Vim
             toggleterm-nvim # Terminal management plugin
             alpha-nvim # Fast and fully customizable greeter for neovim
+            flash-nvim # Navigate your code with search labels
+            trouble-nvim # Pretty diagnostics, references, telescope results, quickfix and location list
+            todo-comments-nvim # Highlight and search for todo comments
+            bufferline-nvim # Buffer line with tabpage integration
+            snacks-nvim # Collection of small, useful utilities by folke
+            noice-nvim # Modern UI for messages, cmdline and popupmenu
             # If it was included in your flake inputs as plugins-hlargs,
             # this would be how to add that plugin in your config.
             # pkgs.neovimPlugins.hlargs

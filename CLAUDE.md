@@ -125,3 +125,8 @@ nix run    # Run to test the plugin loads
 - **after**: Use instead of `config` for setup functions
 - **Category matching**: Plugin name in flake.nix should match the string in `for_cat`
 - **Import**: Always add the import to `plugins/init.lua` to load the configuration
+```
+
+## Important Memories
+
+- Remember we are loading plugins lazily using 'lze' and not 'lazy.nvim' package manager.

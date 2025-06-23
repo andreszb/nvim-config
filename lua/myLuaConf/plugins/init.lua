@@ -4,19 +4,7 @@ if not require('nixCatsUtils').isNixCats then
 end
 vim.cmd.colorscheme(colorschemeName)
 
--- Setup notify plugin immediately
-local ok, notify = pcall(require, "notify")
-if ok then
-  notify.setup({
-    on_open = function(win)
-      vim.api.nvim_win_set_config(win, { focusable = false })
-    end,
-  })
-  vim.notify = notify
-  vim.keymap.set("n", "<Esc>", function()
-      notify.dismiss({ silent = true, })
-  end, { desc = "dismiss notify popup and clear hlsearch" })
-end
+-- Note: Notifications now handled by noice.nvim instead of nvim-notify
 
 -- Setup oil plugin immediately 
 if nixCats('general.extra') then
@@ -66,9 +54,10 @@ require('lze').load {
   { import = "myLuaConf.plugins.alpha", },
   { import = "myLuaConf.plugins.telescope", },
   { import = "myLuaConf.plugins.treesitter", },
+  { import = "myLuaConf.plugins.treesitter-context", },
   { import = "myLuaConf.plugins.completion", },
   { import = "myLuaConf.plugins.claude-code", },
-  { import = "myLuaConf.plugins.nvim-tree", },
+  { import = "myLuaConf.plugins.neo-tree", },
   { import = "myLuaConf.plugins.mini", },
   { import = "myLuaConf.plugins.markdown-preview", },
   { import = "myLuaConf.plugins.undotree", },
@@ -81,4 +70,10 @@ require('lze').load {
   { import = "myLuaConf.plugins.gitsigns", },
   { import = "myLuaConf.plugins.which-key", },
   { import = "myLuaConf.plugins.toggleterm", },
+  { import = "myLuaConf.plugins.flash", },
+  { import = "myLuaConf.plugins.trouble", },
+  { import = "myLuaConf.plugins.todo-comments", },
+  { import = "myLuaConf.plugins.bufferline", },
+  { import = "myLuaConf.plugins.snacks", },
+  { import = "myLuaConf.plugins.noice", },
 }

@@ -31,10 +31,6 @@ return {
           },
           lualine_x = {'filetype'},
         },
-        tabline = {
-          lualine_a = { 'buffers' },
-          lualine_z = { 'tabs' }
-        },
       })
     end,
   },

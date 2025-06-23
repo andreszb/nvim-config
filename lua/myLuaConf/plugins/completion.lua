@@ -46,11 +46,18 @@ return {
       require("blink.cmp").setup({
         -- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
         -- See :h blink-cmp-config-keymap for configuring keymaps
-        keymap =  {
-          preset = 'default',
-        },
         cmdline = {
           enabled = true,
+          -- Move arrow key mappings here instead of keymap.cmdline
+          keymap = {
+            ['<Up>'] = { 'select_prev', 'fallback' },
+            ['<Down>'] = { 'select_next', 'fallback' },
+            ['<Right>'] = { 'accept', 'fallback' },
+            ['<Left>'] = { 'cancel', 'fallback' },
+            ['<C-p>'] = { 'select_prev', 'fallback' },
+            ['<C-n>'] = { 'select_next', 'fallback' },
+            ['<C-y>'] = { 'accept', 'fallback' },
+          },
           completion = {
             menu = {
               auto_show = true,
