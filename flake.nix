@@ -168,6 +168,8 @@
             plenary-nvim # Lua functions used by other plugins.
             tokyonight-nvim # A dark theme for Neovim
             nui-nvim # UI component library for neo-tree
+            nvzone-volt # Dependency for nvzone-menu
+            nvzone-menu # Beautiful floating menu component for Neovim
           ];
           extra = [
             oil-nvim # A file explorer for Neovim
