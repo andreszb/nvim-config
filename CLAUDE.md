@@ -127,6 +127,112 @@ nix run    # Run to test the plugin loads
 - **Import**: Always add the import to `plugins/init.lua` to load the configuration
 ```
 
+## Plugin Modularization Patterns
+
+### Modular Configuration Architecture
+
+We use a modular approach for complex plugins that have multiple sub-modules (like `mini.nvim` and `snacks.nvim`). This keeps configurations organized and maintainable.
+
+#### Snacks.nvim Modularization Pattern
+
+For `snacks.nvim`, we break each feature into separate files and merge configurations:
+
+```lua
+-- lua/myLuaConf/plugins/misc/snacks.lua
+local snacks_modules = {
+  -- UI modules
+  require('myLuaConf.plugins.ui.snacks-notifier'),
+  require('myLuaConf.plugins.ui.snacks-dashboard'),
+  require('myLuaConf.plugins.ui.snacks-statuscolumn'),
+  require('myLuaConf.plugins.ui.snacks-words'),
+  
+  -- Editing modules
+  require('myLuaConf.plugins.editing.snacks-bufdelete'),
+  require('myLuaConf.plugins.editing.snacks-scratch'),
+  
+  -- Git modules
+  require('myLuaConf.plugins.git.snacks-gitbrowse'),
+  require('myLuaConf.plugins.git.snacks-lazygit'),
+  
+  -- Tool modules  
+  require('myLuaConf.plugins.tools.snacks-rename'),
+  require('myLuaConf.plugins.tools.snacks-toggle'),
+  require('myLuaConf.plugins.tools.snacks-win'),
+  require('myLuaConf.plugins.tools.snacks-debug'),
+  
+  -- Misc modules
+  require('myLuaConf.plugins.misc.snacks-quickfile'),
+  require('myLuaConf.plugins.misc.snacks-bigfile'),
+  require('myLuaConf.plugins.misc.snacks-styles'),
+}
+
+-- Merge all modular configurations
+local snacks_config = {}
+for _, module in ipairs(snacks_modules) do
+  for k, v in pairs(module) do
+    snacks_config[k] = v
+  end
+end
+```
+
+Each snacks module file returns a table with its configuration:
+```lua
+-- lua/myLuaConf/plugins/ui/snacks-notifier.lua
+return {
+  notifier = { enabled = false },
+}
+```
+
+#### Mini.nvim Modularization Pattern
+
+For `mini.nvim`, we break each mini plugin into separate files with setup functions:
+
+```lua
+-- lua/myLuaConf/plugins/misc/mini.lua
+local mini_modules = {
+  -- Editing modules
+  { module = require('myLuaConf.plugins.editing.mini-pairs'), setup = 'pairs' },
+  { module = require('myLuaConf.plugins.editing.mini-ai'), setup = 'ai' },
+  
+  -- UI modules
+  { module = require('myLuaConf.plugins.ui.mini-icons'), setup = 'icons' },
+  { module = require('myLuaConf.plugins.ui.mini-animate'), setup = 'animate' },
+}
+
+-- Setup all mini modules
+for _, mini_config in ipairs(mini_modules) do
+  mini_config.module[mini_config.setup]()
+end
+```
+
+Each mini module file returns a table with its setup function:
+```lua
+-- lua/myLuaConf/plugins/editing/mini-pairs.lua
+return {
+  pairs = function()
+    require('mini.pairs').setup()
+  end,
+}
+```
+
+#### Benefits of This Approach
+
+1. **Organized by functionality**: Files are categorized by their purpose (ui/, editing/, git/, tools/, misc/)
+2. **Easy maintenance**: Individual features can be modified independently
+3. **Clean main files**: Main plugin files are concise and use loops instead of repetitive code
+4. **Consistent patterns**: Both snacks and mini follow similar modular approaches
+5. **Scalable**: Easy to add new modules or remove existing ones
+
+#### When to Use Modular Patterns
+
+- **Large plugin suites**: For plugins like mini.nvim or snacks.nvim with many sub-features
+- **Complex configurations**: When a single plugin file would become too large (>100 lines)
+- **Logical groupings**: When features can be naturally categorized by functionality
+- **Team maintenance**: When multiple people need to work on different aspects of the configuration
+
 ## Important Memories
 
 - Remember we are loading plugins lazily using 'lze' and not 'lazy.nvim' package manager.
+- Use modular patterns for complex plugin suites like mini.nvim and snacks.nvim
+- Organize modular files by functionality: ui/, editing/, git/, tools/, misc/
+- Use loops and tables instead of repetitive function calls for cleaner code

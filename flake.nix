@@ -275,7 +275,7 @@
           extra = with pkgs.vimPlugins; [
             fidget-nvim # lualine-lsp-progress
             which-key-nvim # Displays avaiable keybindings.
-            comment-nvim # Smart and powerful commenting plugin
+            ts-comments-nvim # Treesitter-powered commenting plugin
             undotree # Visualize undo history
             indent-blankline-nvim # Adds indentation guides
             vim-startuptime # Measure startup time for Vim

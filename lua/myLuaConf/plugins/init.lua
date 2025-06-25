@@ -29,7 +29,7 @@ require('lze').load({
   { import = 'myLuaConf.plugins.editing.completion' },
   { import = 'myLuaConf.plugins.editing.multicursor' },
   { import = 'myLuaConf.plugins.editing.nvim-surround' },
-  { import = 'myLuaConf.plugins.editing.comment' },
+  { import = 'myLuaConf.plugins.editing.ts-comments' },
   { import = 'myLuaConf.plugins.editing.undotree' },
   { import = 'myLuaConf.plugins.editing.grug-far' },
   

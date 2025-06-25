@@ -1,10 +1,10 @@
 return {
   {
-    "comment.nvim",
+    "ts-comments.nvim",
     for_cat = 'general.extra',
     event = "DeferredUIEnter",
-    after = function(plugin)
-      require('Comment').setup()
+    after = function()
+      require('ts-comments').setup()
     end,
   },
 }

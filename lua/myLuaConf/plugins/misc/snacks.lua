@@ -1,5 +1,40 @@
 -- Snacks.nvim: Collection of small, useful utilities by folke
 -- Complements existing setup with lightweight conveniences
+
+-- Pull in modular snacks configurations
+local snacks_modules = {
+  -- UI modules
+  require('myLuaConf.plugins.ui.snacks-statuscolumn'),
+  require('myLuaConf.plugins.ui.snacks-words'),
+
+  -- Editing modules
+  require('myLuaConf.plugins.editing.snacks-bufdelete'),
+  require('myLuaConf.plugins.editing.snacks-scratch'),
+
+  -- Git modules
+  require('myLuaConf.plugins.git.snacks-gitbrowse'),
+  require('myLuaConf.plugins.git.snacks-lazygit'),
+
+  -- Tool modules
+  require('myLuaConf.plugins.tools.snacks-rename'),
+  require('myLuaConf.plugins.tools.snacks-toggle'),
+  require('myLuaConf.plugins.tools.snacks-win'),
+  require('myLuaConf.plugins.tools.snacks-debug'),
+
+  -- Misc modules
+  require('myLuaConf.plugins.misc.snacks-quickfile'),
+  require('myLuaConf.plugins.misc.snacks-bigfile'),
+  require('myLuaConf.plugins.misc.snacks-styles'),
+}
+
+-- Merge all modular configurations
+local snacks_config = {}
+for _, module in ipairs(snacks_modules) do
+  for k, v in pairs(module) do
+    snacks_config[k] = v
+  end
+end
+
 return {
   {
     'snacks.nvim',
@@ -11,8 +46,6 @@ return {
       -- Terminal management
       -- { '<leader>gg', function() Snacks.lazygit() end, desc = 'Lazygit' },
 
-      -- Git integration
-      -- { '<leader>gb', function() Snacks.git.blame_line() end, desc = 'Git Blame Line' },
       { '<leader>gB', function() Snacks.gitbrowse() end, desc = 'Git Browse' },
 
       -- Buffer management
@@ -22,9 +55,6 @@ return {
       -- File operations
       { '<leader>.', function() Snacks.scratch() end, desc = 'Toggle Scratch Buffer' },
       { '<leader>S', function() Snacks.scratch.select() end, desc = 'Select Scratch Buffer' },
-
-      -- Notifications
-      { '<leader>un', function() Snacks.notifier.hide() end, desc = 'Dismiss All Notifications' },
 
       -- Words highlighting (like VSCode)
       -- { '<leader>uw', function() Snacks.words.toggle() end, desc = 'Toggle Word Highlighting' },
@@ -37,131 +67,7 @@ return {
       { '<leader>gf', function() Snacks.lazygit.log_file() end, desc = 'Lazygit Current File History' },
     },
 
-    after = function()
-      require('snacks').setup({
-        -- Notifier disabled - using noice.nvim for notifications instead
-        notifier = { enabled = false },
-
-        -- Better handling of large files
-        bigfile = {
-          enabled = true,
-          -- Disable features for files larger than 1.5MB
-          size = 1.5 * 1024 * 1024,
-          setup = function()
-            vim.cmd('syntax off')
-            vim.cmd('IlluminatePauseBuf') -- Disable word highlighting
-            vim.opt_local.foldmethod = 'manual'
-            vim.opt_local.spell = false
-          end,
-        },
-
-        -- Smart buffer deletion
-        bufdelete = { enabled = true },
-
-        -- Git integration
-        gitbrowse = {
-          enabled = true,
-          -- Open files in browser (GitHub, GitLab, etc.)
-          url_patterns = {
-            ['github.com'] = {
-              branch = '/tree/{branch}',
-              file = '/blob/{branch}/{file}#L{line_start}-L{line_end}',
-              commit = '/commit/{commit}',
-            },
-          },
-        },
-
-        -- LazyGit integration
-        lazygit = {
-          enabled = true,
-          -- Window configuration
-          win = {
-            style = 'lazygit',
-            width = 0.9,
-            height = 0.9,
-          },
-        },
-
-        -- Fast file operations
-        quickfile = { enabled = true },
-
-        -- File/buffer renaming
-        rename = { enabled = true },
-
-        -- Scratch buffer management
-        scratch = {
-          enabled = true,
-          name = 'scratch',
-          ft = function()
-            if vim.bo.buftype == '' and vim.bo.filetype == '' then
-              return 'markdown'
-            end
-            return vim.bo.filetype
-          end,
-        },
-
-        -- Enhanced status column
-        statuscolumn = {
-          enabled = true,
-          left = { 'mark', 'sign' },
-          right = { 'fold', 'git' },
-          folds = {
-            open = true,
-            git_hl = true,
-          },
-          git = {
-            patterns = { 'GitSign', 'MiniDiffSign' },
-          },
-        },
-
-        -- -- Better terminal integration
-        -- terminal = {
-        --   enabled = true,
-        --   win = {
-        --     style = "terminal",
-        --     position = "float",
-        --     width = 0.8,
-        --     height = 0.8,
-        --   },
-        -- },
-
-        -- Option toggling utilities
-        toggle = { enabled = true },
-
-        -- Word highlighting (like VSCode's symbol highlighting)
-        words = {
-          enabled = true,
-          debounce = 200,
-          notify_jump = false,
-          notify_end = true,
-          foldopen = true,
-          jumplist = true,
-          modes = { 'n', 'i', 'c' },
-        },
-
-        -- Window management utilities
-        win = { enabled = true },
-
-        -- Debug utilities
-        debug = { enabled = false }, -- Disable unless needed for development
-
-        -- Additional styles for floating windows
-        styles = {
-          notification = {
-            wo = { wrap = true },
-            bo = { filetype = 'snacks_notif' },
-          },
-          terminal = {
-            bo = { filetype = 'snacks_terminal' },
-            wo = {},
-          },
-          lazygit = {
-            bo = { filetype = 'snacks_lazygit' },
-            wo = { colorcolumn = '' },
-          },
-        },
-      })
-    end,
+    after = function() require('snacks').setup(snacks_config) end,
   },
 }
 
