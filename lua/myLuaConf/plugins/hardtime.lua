@@ -7,6 +7,7 @@ return {
     event = 'DeferredUIEnter',
     after = function()
       require('hardtime').setup {
+        enabled = false,
         timeout = 5000,
         disable_mouse = false, -- Enable mouse usage
         -- Add yazi to disabled filetypes (not in default)
