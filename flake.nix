@@ -180,6 +180,7 @@
             hardtime-nvim # Plugin to help break bad Vim habits
             grug-far-nvim # Find and replace across files with modern UI
             edgy-nvim # Manage window layouts and sidebar panels
+            multicursor-nvim # Multiple cursors support for Neovim
           ];
         };
         themer = with pkgs.vimPlugins; (
