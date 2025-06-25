@@ -170,11 +170,16 @@
             nui-nvim # UI component library for neo-tree
             nvzone-volt # Dependency for nvzone-menu
             nvzone-menu # Beautiful floating menu component for Neovim
+            nvim-notify # Beautiful notification system for Neovim
           ];
           extra = [
             oil-nvim # A file explorer for Neovim
             oil-git-status-nvim # Git status integration for oil.nvim
             nvim-web-devicons #
+            yazi-nvim # Terminal file manager integration for Neovim
+            hardtime-nvim # Plugin to help break bad Vim habits
+            grug-far-nvim # Find and replace across files with modern UI
+            edgy-nvim # Manage window layouts and sidebar panels
           ];
         };
         themer = with pkgs.vimPlugins; (

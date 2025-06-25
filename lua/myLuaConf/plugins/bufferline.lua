@@ -22,6 +22,15 @@ return {
           mode = "buffers",
           themable = true,
           numbers = "none",
+          -- Integration with edgy.nvim
+          offsets = {
+            {
+              filetype = "neo-tree",
+              text = "Neo-tree",
+              highlight = "Directory",
+              text_align = "left",
+            },
+          },
           close_command = "bdelete! %d",
           right_mouse_command = "bdelete! %d",
           left_mouse_command = "buffer %d",

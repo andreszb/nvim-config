@@ -36,4 +36,8 @@ require('lze').load({
   { import = 'myLuaConf.plugins.bufferline' },
   { import = 'myLuaConf.plugins.snacks' },
   { import = 'myLuaConf.plugins.noice' },
+  { import = 'myLuaConf.plugins.yazi' },
+  { import = 'myLuaConf.plugins.hardtime' },
+  { import = 'myLuaConf.plugins.grug-far' },
+  { import = 'myLuaConf.plugins.edgy' },
 })

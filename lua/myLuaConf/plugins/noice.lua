@@ -8,7 +8,7 @@ return {
 
     -- Key mappings for noice functionality
     keys = {
-      -- Message history and search
+
       { '<leader>sn', function() require('noice').cmd('history') end, desc = 'Noice History' },
       { '<leader>sl', function() require('noice').cmd('last') end, desc = 'Noice Last Message' },
       { '<leader>sa', function() require('noice').cmd('all') end, desc = 'Noice All Messages' },
