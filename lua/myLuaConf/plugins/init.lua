@@ -62,6 +62,8 @@ require('lze').load({
 
   -- Git plugins
   { import = 'myLuaConf.plugins.git.gitsigns' },
+  { import = 'myLuaConf.plugins.git.neogit' },
+  { import = 'myLuaConf.plugins.git.diffview' },
 
   -- Tools plugins
   { import = 'myLuaConf.plugins.tools.toggleterm' },

@@ -74,6 +74,8 @@ require('nixCatsUtils.catPacker').setup({
   { 'nvim-lualine/lualine.nvim', opt = true, },
   { 'lukas-reineke/indent-blankline.nvim', opt = true, },
   { 'numToStr/Comment.nvim', opt = true, as = "comment.nvim", },
+  { 'NeogitOrg/neogit', opt = true, },
+  { 'sindrets/diffview.nvim', opt = true, },
   { 'nvim-tree/nvim-tree.lua', opt = true, },
   { 'echasnovski/mini.nvim', opt = true, },
   {

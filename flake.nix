@@ -284,6 +284,8 @@
             bufferline-nvim # Buffer line with tabpage integration
             snacks-nvim # Collection of small, useful utilities by folke
             noice-nvim # Modern UI for messages, cmdline and popupmenu
+            neogit # Magit-like Git interface for Neovim
+            diffview-nvim # Single tabpage interface for easily cycling through diffs
             # If it was included in your flake inputs as plugins-hlargs,
             # this would be how to add that plugin in your config.
             # pkgs.neovimPlugins.hlargs
