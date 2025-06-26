@@ -26,7 +26,7 @@ return {
           offsets = {
             {
               filetype = "neo-tree",
-              text = "Neo-tree",
+              text = "Explorer",
               highlight = "Directory",
               text_align = "left",
             },
@@ -97,54 +97,11 @@ return {
           }
         },
         highlights = {
-          fill = {
-            bg = {
-              attribute = "bg",
-              highlight = "TabLine"
-            }
-          },
-          background = {
-            bg = {
-              attribute = "bg", 
-              highlight = "TabLine"
-            }
-          },
-          tab = {
-            bg = {
-              attribute = "bg",
-              highlight = "TabLine"
-            }
-          },
-          tab_selected = {
-            bg = {
-              attribute = "bg",
-              highlight = "Normal"
-            }
-          },
-          tab_separator = {
-            fg = {
-              attribute = "bg",
-              highlight = "TabLine"
-            },
-            bg = {
-              attribute = "bg",
-              highlight = "TabLine"
-            }
-          },
-          tab_separator_selected = {
-            fg = {
-              attribute = "bg",
-              highlight = "TabLine"
-            },
-            bg = {
-              attribute = "bg",
-              highlight = "Normal"
-            },
-            sp = {
-              attribute = "fg",
-              highlight = "TabLineSel"
-            }
-          },
+          buffer_selected = { bold = true, italic = true },
+          separator = { fg = 0 },
+          fill = { bg = 0 },
+          separator_visible = { fg = 0 },
+          separator_selected = { fg = 0 } ,
         }
       })
     end,
