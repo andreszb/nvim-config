@@ -6,6 +6,7 @@ local mini_modules = {
   -- Editing modules
   { module = require('myLuaConf.plugins.editing.mini-pairs'), setup = 'pairs' },
   { module = require('myLuaConf.plugins.editing.mini-ai'), setup = 'ai' },
+  { module = require('myLuaConf.plugins.editing.mini-surround'), setup = 'surround' },
 
   -- UI modules
   { module = require('myLuaConf.plugins.ui.mini-icons'), setup = 'icons' },

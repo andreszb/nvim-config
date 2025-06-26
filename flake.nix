@@ -267,9 +267,6 @@
             lualine-nvim # LSP progress in lualine
             gitsigns-nvim
             vim-sleuth # Automatically adjusts indentation settings
-            vim-fugitive
-            vim-rhubarb
-            nvim-surround # Surround text objects easily
             mini-nvim # Library of mini plugins
           ];
           extra = with pkgs.vimPlugins; [
