@@ -154,3 +154,45 @@ vim.keymap.set("x", "<leader>P", '"_dP', { noremap = true, silent = true, desc =
 
 vim.opt.laststatus = 3
 vim.opt.splitkeep = "screen"
+
+-- [[ Auto-reload files when changed externally ]]
+-- Enable autoread to automatically reload files when they change
+vim.opt.autoread = true
+
+-- Create autocommands to check for file changes even when Neovim is in background
+local autoread_group = vim.api.nvim_create_augroup('AutoRead', { clear = true })
+
+-- Set up a timer to periodically check for file changes in background
+local timer = vim.loop.new_timer()
+timer:start(1000, 1000, vim.schedule_wrap(function()
+  -- Only check if we're not in command mode and have buffers
+  if vim.fn.mode() ~= 'c' and #vim.api.nvim_list_bufs() > 0 then
+    -- Check each buffer for changes
+    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+      if vim.api.nvim_buf_is_loaded(buf) and vim.api.nvim_buf_get_name(buf) ~= '' then
+        local buf_name = vim.api.nvim_buf_get_name(buf)
+        if vim.fn.filereadable(buf_name) == 1 then
+          vim.cmd('checktime ' .. buf)
+        end
+      end
+    end
+  end
+end))
+
+-- Also check on these events for immediate response when possible
+vim.api.nvim_create_autocmd({'FocusGained', 'BufEnter', 'CursorHold', 'CursorHoldI'}, {
+  group = autoread_group,
+  callback = function()
+    if vim.fn.mode() ~= 'c' then
+      vim.cmd('checktime')
+    end
+  end,
+})
+
+-- Silent reload - let Neovim handle the notification through Noice
+vim.api.nvim_create_autocmd('FileChangedShellPost', {
+  group = autoread_group,
+  callback = function()
+    -- Don't add custom notification - Neovim's built-in message will be handled by Noice
+  end,
+})
