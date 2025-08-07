@@ -64,6 +64,17 @@ return {
 
           },
         },
+
+        -- Git status source configuration
+        git_status = {
+          window = {
+            mappings = {
+              ['<cr>'] = 'open', -- Ensure Enter opens in current window
+              ['<2-LeftMouse>'] = 'open', -- Ensure double-click opens in current window
+            }
+          }
+        },
+
         -- Default visual components configuration
         default_component_configs = {
           -- Indentation and folder expand/collapse

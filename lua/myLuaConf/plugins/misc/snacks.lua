@@ -51,6 +51,7 @@ return {
       -- Buffer management
       { '<leader>bd', function() Snacks.bufdelete() end, desc = 'Delete Buffer' },
       { '<leader>bo', function() Snacks.bufdelete.other() end, desc = 'Delete Other Buffers' },
+      { '<S-j>', function() Snacks.bufdelete() end, desc = 'Delete Buffer' },
 
       -- File operations
       { '<leader>.', function() Snacks.scratch() end, desc = 'Toggle Scratch Buffer' },
